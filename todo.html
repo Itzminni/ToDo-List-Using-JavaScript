@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+
+	<div class="col-lg-4 col-lg-offset-4" style="margin-top: 5%;">
+		<div class="col-lg-10 col-lg-offset-1">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h4 class="text-center">ToDo List</h4>
+				</div>
+				<div class="panel-body">
+					<ul class="list-group" id="printlist">
+					</ul>
+				</div>
+				<div class="panel-footer">
+					<button data-toggle="modal" data-target="#modal" class="btn btn-primary">Add Task</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="modal" role="dialog">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Add Task</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<input type="text" id="name" placeholder="Task Name" class="form-control">
+					</div>
+					<div class="form-group">
+						<button onclick="addtask()" class="btn btn-info">Add <span class="glyphicon glyphicon-plus"></span></button>
+						<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script type="text/javascript">
+
+
+		var obj = [{Name:'Swimming(static text)', Status:0}, {Name:'Playing Basketball(static text)', Status:1}];
+
+
+		function addtask() {
+			var name = document.getElementById('name').value;
+			if (name == '') {
+				alert('Please fill name');
+				document.getElementById('name').focus();
+			}else{
+				var objj = {Name:name, Status:0};
+				obj.push(objj);
+				showtasks();
+				document.getElementById('name').value = '';
+				document.getElementById('name').focus();
+			}
+		}
+
+		function showtasks() {
+			var str = '';
+			for (var i = 0; i < obj.length; i++) {
+				// console.log(obj[i]);
+
+				// 	str += '<li class="list-group-item">';
+				// 	str += '<button class="btn btn-xs pull-right">';
+
+				// if (obj[i].Status == 0) {
+				// 	str += '<span class="glyphicon glyphicon-unchecked"></span>';
+				// }else{
+				// 	str += '<span class="glyphicon glyphicon-check"></span>';
+				// }
+
+				// 	str += '</button>';
+
+				// if (obj[i].Status == 0) {
+				// 	str += obj[i].Name;
+				// }else{
+				// 	str += "<del>"+obj[i].Name+"</del>";
+				// }
+
+				// 	str += '</li>';
+				if (obj[i].Status == 0) {
+					str += '<li class="list-group-item">';
+					str += '<button class="btn btn-xs pull-right" id="'+obj[i].Name+'" onclick="done(this.id)">';
+					str += '<span class="glyphicon glyphicon-unchecked"></span>';
+					str += '</button>';
+					str += obj[i].Name;
+					str += '</li>';
+				} else {
+					str += '<li class="list-group-item">';
+					str += '<button class="btn btn-xs pull-right">';
+					str += '<span class="glyphicon glyphicon-check"></span>';
+					str += '</button>';
+					str += '<del>'+obj[i].Name+'</del>';
+					str += '</li>';
+				}
+					// str += '<li class="list-group-item">';
+					// str += '<button class="btn btn-xs pull-right">';
+					// str += '<span class="glyphicon glyphicon-unchecked"></span>';
+					// str += '</button>';
+					// str += 'Task 2';
+					// str += '</li>';
+
+			}
+
+			document.getElementById('printlist').innerHTML = str;
+		}
+		showtasks();
+
+		function done(x) {
+			// alert(x);
+
+			
+
+			for (var i = 0; i < obj.length; i++) {
+				if (obj[i].Name == x) {
+					obj[i].Status = 1;
+					showtasks();
+				}
+			}
+		}
+	</script>
+</body>
+</html>
